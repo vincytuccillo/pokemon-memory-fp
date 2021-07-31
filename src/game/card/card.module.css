@@ -1,0 +1,47 @@
+@keyframes flip-card {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateY(180deg);
+    opacity: 0;
+  }
+}
+
+.front {
+  width: 200px;
+  height: 200px;
+  z-index: 1;
+  position: absolute;
+  background: black;
+}
+.back {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  z-index: 0;
+  justify-content: center;
+}
+.frontAnimation {
+  animation: flip-card 1s;
+  animation-fill-mode: forwards;
+}
+
+.backAnimation {
+  display: unset;
+}
+
+.content {
+  position: relative;
+  cursor: pointer;
+}
+
+.boxContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.noPointerEvents {
+  pointer-events: none;
+}
