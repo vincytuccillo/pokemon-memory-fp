@@ -1,6 +1,6 @@
 import { shuffleElements } from "./shuffle-elements";
 
-describe("Shuffle Elements ", () => {
+describe("shuffleElements ", () => {
   it("should return an array with the same length", () => {
     const array = [1, 2];
 

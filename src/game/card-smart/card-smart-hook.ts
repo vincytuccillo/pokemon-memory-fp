@@ -1,8 +1,8 @@
-import { selectPlayer } from "../../player/player.reducer";
-import { useAppSelector } from "../../redux/store";
+import { selectFoundPokemonNames } from "../../player/player.reducer";
+import { useAppSelector } from "../../redux";
 
 export const useCardSmart = () => {
-  const { foundPokemonNames } = useAppSelector(selectPlayer);
+  const foundPokemonNames = useAppSelector(selectFoundPokemonNames);
 
   return {
     foundPokemonNames,

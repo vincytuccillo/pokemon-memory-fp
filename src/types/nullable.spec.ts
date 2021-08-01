@@ -1,6 +1,6 @@
 import { isNil, isNotNil } from "./nullable.guards";
 
-describe("isNil function ", () => {
+describe("isNil ", () => {
   it("should return true with null value", () => {
     return expect(isNil(null)).toEqual(true);
   });
@@ -18,7 +18,7 @@ describe("isNil function ", () => {
   });
 });
 
-describe("isNotNil function ", () => {
+describe("isNotNil ", () => {
   it("should return false with null value", () => {
     return expect(isNotNil(null)).toEqual(false);
   });

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { pipe } from "fp-ts/lib/function";
 import { RootState } from "../redux/store";
 import { Nullable } from "../types";
 import { Player } from "./player.types";
@@ -34,7 +35,18 @@ export const playerSlice = createSlice({
         ],
       };
     },
+    reset() {
+      return initialState;
+    },
   },
 });
 
 export const selectPlayer = (state: RootState) => state.player;
+export const selectMoves = (state: RootState) =>
+  pipe(state, selectPlayer, ({ moves }) => moves);
+
+export const selectSelectedPokemon = (state: RootState) =>
+  pipe(state, selectPlayer, ({ selectedPokemon }) => selectedPokemon);
+
+export const selectFoundPokemonNames = (state: RootState) =>
+  pipe(state, selectPlayer, ({ foundPokemonNames }) => foundPokemonNames);

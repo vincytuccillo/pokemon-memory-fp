@@ -1,5 +1,6 @@
+import { isNotEmpty } from "../../array";
 import { Pokemon } from "../../pokemon/pokemon.types";
-import { OpenedCard } from "./book-smart.types";
+import { OpenedCard } from "../game.types";
 
 export const areThreeOpenedCard = (openedCards: readonly OpenedCard[]) =>
   openedCards.length === 3;
@@ -11,10 +12,10 @@ export const isOneOpenedCard = (openedCards: readonly OpenedCard[]) =>
   openedCards.length === 1;
 
 export const isEndGame = (
-  foundPokemonName: readonly string[],
+  foundPokemonNames: readonly string[],
   allPokemons: readonly Pokemon[]
 ) =>
-  foundPokemonName.length > 0 &&
+  isNotEmpty(foundPokemonNames) &&
   allPokemons.every((value) =>
-    foundPokemonName.some((name) => name === value.name)
+    foundPokemonNames.some((name) => name === value.name)
   );

@@ -2,7 +2,7 @@ import { Grid } from "@chakra-ui/react";
 import { FC } from "react";
 import { Pokemon } from "../../pokemon/pokemon.types";
 import { isNotNil } from "../../types/nullable.guards";
-import { OpenedCard } from "../board-smart/book-smart.types";
+import { OpenedCard } from "../game.types";
 import { CardSmartComponent } from "../card-smart/card-smart.component";
 import { CounterSmartComponent } from "../counter-smart/counter-smart.component";
 import styles from "./board.module.css";
@@ -24,8 +24,8 @@ export const BoardComponent: FC<BoardComponentProps> = ({
         templateColumns={`repeat(3,1fr)`}
         gap={"10px"}
         templateRows={`repeat(3,1fr)`}
-        height={"100%"}
-        className={styles.grid}
+        height={"800px"}
+        width={"800px"}
       >
         {pokemons.map((pokemon, index) => (
           <CardSmartComponent

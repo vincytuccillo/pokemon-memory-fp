@@ -1,6 +1,6 @@
 import { Box, Image } from "@chakra-ui/react";
 import { FC } from "react";
-import { Pokemon } from "../../pokemon/pokemon.types";
+import { Pokemon } from "../../pokemon";
 import styles from "./card.module.css";
 
 export type CardComponentProps = {
@@ -24,8 +24,8 @@ export const CardComponent: FC<CardComponentProps> = ({
     >
       <div className={`${styles.back} ${isOpen ? styles.backAnimation : ""}`}>
         <Box
-          width={"200px"}
-          height={"200px"}
+          width={"100%"}
+          height={"100%"}
           borderWidth="1px"
           borderRadius="lg"
           overflow="hidden"
@@ -37,8 +37,8 @@ export const CardComponent: FC<CardComponentProps> = ({
 
       <div className={`${styles.front} ${isOpen ? styles.frontAnimation : ""}`}>
         <Box
-          width={"200px"}
-          height={"200px"}
+          width={"100%"}
+          height={"100%"}
           borderWidth="1px"
           borderRadius="lg"
           overflow="hidden"

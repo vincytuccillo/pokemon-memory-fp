@@ -1,7 +1,7 @@
 import { playerSlice } from "./player.reducer";
 import { Player } from "./player.types";
 
-describe("counter reducer", () => {
+describe("player reducer", () => {
   const initialState: Player = {
     moves: 0,
     selectedPokemon: null,
@@ -13,7 +13,7 @@ describe("counter reducer", () => {
     );
   });
 
-  it("should handle increment", () => {
+  it("should handle increment moves", () => {
     const actual = playerSlice.reducer(
       initialState,
       playerSlice.actions.addMove()
@@ -21,7 +21,7 @@ describe("counter reducer", () => {
     expect(actual.moves).toEqual(1);
   });
 
-  it("should handle increment", () => {
+  it("should set selected Pokemon", () => {
     const actual = playerSlice.reducer(
       initialState,
       playerSlice.actions.setSelectedPokemon("charizard")
@@ -29,11 +29,19 @@ describe("counter reducer", () => {
     expect(actual.selectedPokemon).toEqual("charizard");
   });
 
-  it("should handle increment", () => {
+  it("should add Pokemon Name", () => {
     const actual = playerSlice.reducer(
       initialState,
       playerSlice.actions.addPokemonName("charizard")
     );
     expect(actual.foundPokemonNames).toEqual(["charizard"]);
+  });
+
+  it("should reset", () => {
+    const actual = playerSlice.reducer(
+      initialState,
+      playerSlice.actions.reset()
+    );
+    expect(actual).toEqual(initialState);
   });
 });

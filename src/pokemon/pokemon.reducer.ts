@@ -5,55 +5,19 @@ import {
   FetchBaseQueryError,
   FetchBaseQueryMeta,
 } from "@reduxjs/toolkit/query/react";
-import {
-  fromOption,
-  getOrElseW as getOrElseEW,
-  map as mapE,
-  matchW as matchEW,
-} from "fp-ts/lib/Either";
-import { flow, identity, pipe } from "fp-ts/lib/function";
-import { fromNullable, map } from "fp-ts/lib/Option";
 import { match } from "ts-pattern";
 import { isError } from "../error";
 import { createAdapterError } from "../error/adapter-error.factory";
-import { createApiError } from "../error/api-error.factory";
-import {
-  decodeGetPokemonsPayload,
-  decodePokemonPayload,
-} from "./pokemon.adapter";
+import { decodePokemon, decodePokemonList } from "./pokemon-api.utils";
 import { Pokemon } from "./pokemon.types";
 
-export const getListPokemonFromApi = async ({
-  getPokemonList,
-}: {
-  readonly getPokemonList: () => Promise<
+export const getPokemonListFromApi = async (
+  getPokemonList: () => Promise<
     QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
-  >;
-}) => {
+  >
+) => {
   const pokemonList = await getPokemonList();
-
-  return pipe(
-    pokemonList,
-    fromNullable,
-    map(({ data }) => data),
-    fromOption(() => ({
-      ...createApiError(
-        "Api Error",
-        typeof pokemonList.error?.status === "number"
-          ? pokemonList.error?.status
-          : 500
-      ),
-    })),
-    mapE(
-      flow(
-        decodeGetPokemonsPayload,
-        mapE(({ results }) => results),
-        getOrElseEW(() => createAdapterError("Adapter Pokemon List Error"))
-      )
-    ),
-
-    matchEW(identity, identity)
-  );
+  return decodePokemonList(pokemonList);
 };
 
 export const getPokemonFromApi = async (
@@ -65,27 +29,7 @@ export const getPokemonFromApi = async (
   >
 ) => {
   const pokemon = await getPokemon(pokemonName);
-
-  return pipe(
-    pokemon,
-    fromNullable,
-    map(({ data }) => data),
-    fromOption(() => ({
-      ...createApiError(
-        "Api Error",
-        typeof pokemon.error?.status === "number" ? pokemon.error?.status : 500
-      ),
-    })),
-    mapE(
-      flow(
-        decodePokemonPayload,
-        getOrElseEW(() => ({
-          error: createAdapterError("Adapter Pokemon Error"),
-        }))
-      )
-    ),
-    matchEW(identity, identity)
-  );
+  return decodePokemon(pokemon);
 };
 
 export const pokemonApi = createApi({
@@ -94,9 +38,9 @@ export const pokemonApi = createApi({
   endpoints: (builder) => ({
     getPokemons: builder.query<readonly Pokemon[], string>({
       queryFn: async (arg, _, __, baseQuery) => {
-        const pokemonListRes = await getListPokemonFromApi({
-          getPokemonList: async () => await baseQuery(`pokemon?${arg}`),
-        });
+        const pokemonListRes = await getPokemonListFromApi(
+          async () => await baseQuery(`pokemon?limit=${arg}`)
+        );
 
         return await match(pokemonListRes)
           .when(isError, (error) => ({
@@ -139,7 +83,6 @@ export const pokemonApi = createApi({
           )
           .otherwise(() => {
             const adapterError = createAdapterError("Error with adapter");
-
             return {
               error: {
                 status: 200,

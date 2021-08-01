@@ -2,7 +2,6 @@
   "name": "pokemon-memory",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://gigitux.github.io/pokemon-memory-fp",
   "dependencies": {
     "@chakra-ui/react": "^1.6.5",
     "@emotion/react": "^11.4.0",

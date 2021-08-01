@@ -1,12 +1,9 @@
-.grid {
-  width: 50%;
-  height: 50%;
-}
-
 .container {
   display: flex;
   height: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-left: 60px;
+  gap: 50px;
 }

@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Pokemon } from "../../pokemon/pokemon.types";
-import { OpenedCard } from "../board-smart/book-smart.types";
+import { Pokemon } from "../../pokemon";
+import { OpenedCard } from "../game.types";
 import { CardComponent } from "../card/card.component";
 import { useCardSmart } from "./card-smart-hook";
 

@@ -1,6 +1,6 @@
 import { duplicateElements } from "./duplicate-elements";
 
-describe("Duplicate Elements ", () => {
+describe("duplicateElements ", () => {
   it("should return an array with duplicate elements (primitive type)", () => {
     const array = [1, 2];
 
