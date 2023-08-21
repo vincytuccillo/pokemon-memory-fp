@@ -1,8 +1,17 @@
-FROM node:16.17.0-bullseye-slim
-ENV NODE_ENV production
-WORKDIR /usr/src/app
-COPY --chown=root:root  . /usr/src/app
-RUN npm ci --only=production
-USER root
+FROM node:14-alpine
+
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app/node_modules
+
+WORKDIR /home/node/app
+
+COPY . .
+
+USER node
+
+RUN npm install
+
+COPY --chown=node:node . .
+
 EXPOSE 3000
+
 CMD [ "npm", "start" ]
