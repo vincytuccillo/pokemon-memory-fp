@@ -1,16 +1,14 @@
 FROM node:14-alpine
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-WORKDIR /home/node/app
+WORKDIR /usr/src/app
 
-COPY . .
+COPY . /usr/src/app
 
 USER node
 
-RUN npm install
+RUN npm ci --only=production
 
-COPY --chown=node:node . .
 
 EXPOSE 3000
 
